@@ -38,6 +38,7 @@ public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.
     private FirebaseFirestore firebaseFirestore;
 
 
+    String UserId;
     private RecyclerView mfirestorelist;
     private FirestorePagingAdapter adapter;
     private ImageButton btt;
@@ -113,6 +114,8 @@ public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(HomeActivity.this, MainActivity.class));
                 return true;
+            case R.id.nav_maliste:
+                startActivity(new Intent(HomeActivity.this, ListeActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }

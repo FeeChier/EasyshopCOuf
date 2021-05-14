@@ -1,6 +1,5 @@
 package com.example.auth;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.firebase.ui.firestore.paging.LoadingState;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 public class FirestoreAdapter extends FirestorePagingAdapter<ModelMagasin, FirestoreAdapter.MagasinViewHolder> {
 
@@ -76,8 +72,8 @@ public class FirestoreAdapter extends FirestorePagingAdapter<ModelMagasin, Fires
         public MagasinViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            list_nom = itemView.findViewById(R.id.list_name);
-            list_adresse = itemView.findViewById(R.id.list_adresse);
+            list_nom = itemView.findViewById(R.id.list_description);
+            list_adresse = itemView.findViewById(R.id.list_name);
             magasin_logo = itemView.findViewById(R.id.magasin_logo);
             itemView.setOnClickListener(this);
         }

@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ArticleActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/article_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/article_top_card"
+        app:srcCompat="@drawable/ic_add_white_24px" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/article_top_card"
         android:layout_width="match_parent"
@@ -15,29 +26,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/article_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="1.0"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/view" />
-
         <!-- Back button -->
 
-
-        <ImageView
-            android:id="@+id/article_button_back"
-            android:layout_width="19dp"
-            android:layout_height="17dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_close_white_24px" />
 
         <View
             android:id="@+id/view"
@@ -49,13 +39,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/article_image"
+            android:layout_width="411dp"
+            android:layout_height="417dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toTopOf="@+id/view"
+            app:layout_constraintVertical_bias="0.0"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/article_button_back"
+            android:layout_width="19dp"
+            android:layout_height="17dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close_white_24px" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/article_name"
-        android:layout_width="wrap_content"
-        android:layout_height="47dp"
+        android:layout_width="286dp"
+        android:layout_height="52dp"
         android:layout_above="@+id/article_description"
         android:layout_marginStart="28dp"
         android:layout_marginTop="32dp"
@@ -81,13 +93,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/article_description"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="92dp"
         android:layout_marginEnd="48dp"
         android:layout_toRightOf="@+id/article_description"
         android:text="5£"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.965"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/article_name"
         app:layout_constraintTop_toBottomOf="@+id/article_top_card" />
 

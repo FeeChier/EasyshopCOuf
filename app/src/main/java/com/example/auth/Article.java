@@ -7,15 +7,17 @@ public class Article {
     private String price;
     private String itemId;
     private String photo;
+    private String description_complete;
 
     public Article(){}
 
-    public Article(String item, String name, String description, String price, String photo){
+    public Article(String item, String name, String description, String price, String photo, String description_complete){
         this.description = description;
         this.price = price;
         this.name = name;
         this.itemId = item;
         this.photo = photo;
+        this.description_complete = description_complete;
     }
 
 
@@ -57,5 +59,13 @@ public class Article {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getDescription_complete() {
+        return description_complete;
+    }
+
+    public void setDescription_complete(String description_complete) {
+        this.description_complete = description_complete;
     }
 }
