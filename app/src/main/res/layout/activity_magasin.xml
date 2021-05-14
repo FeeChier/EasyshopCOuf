@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MagasinActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/magasin_top_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
+
+        <ImageView
+            android:id="@+id/magasin_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:alpha="1.0"
+            android:scaleType="centerCrop" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/gradient_up" />
+
+        <!-- Back button -->
+        <ImageView
+            android:id="@+id/magasin_button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/magasin_name"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_close_white_24px" />
+
+        <TextView
+            android:id="@+id/magasin_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/magasin_category"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:text="Monoprix" />
+
+
+        <TextView
+            android:id="@+id/magasin_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/magasin_name"
+            android:layout_alignBottom="@+id/magasin_image"
+            android:layout_marginLeft="-1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="19dp"
+            android:textColor="@android:color/white"
+            tools:text="Italian" />
+
+        <TextView
+            android:id="@+id/magasin_city_divider"
+            android:layout_alignTop="@+id/magasin_category"
+            android:layout_toRightOf="@+id/magasin_category"
+            android:text="   "
+            android:textColor="@android:color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <TextView
+            android:id="@+id/magasin_adress"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/magasin_category"
+            android:layout_alignTop="@+id/magasin_category"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="0dp"
+            android:layout_toRightOf="@+id/magasin_city_divider"
+            android:textColor="@android:color/white"
+            tools:text="50 avenue Charles de Gaulle" />
+
+
+    </RelativeLayout>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_article"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/magasin_top_card"
+        android:background="@android:color/transparent"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        android:paddingTop="28dp"
+        tools:listitem="@layout/item_article" />
+
+    <LinearLayout
+        android:id="@+id/view_empty_article"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/magasin_top_card"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:src="@drawable/ic_baseline_error_outline_24"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Oops il n'y a pas d'articles disponibles dans ce magfasin"
+            android:textColor="@color/greyDisabled" />
+
+    </LinearLayout>
+</RelativeLayout>

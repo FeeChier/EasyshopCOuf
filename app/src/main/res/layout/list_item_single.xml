@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
+
     android:background="@drawable/recycler_bg">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_marginStart="42dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/magasin_logo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -29,12 +29,10 @@
         app:layout_constraintVertical_bias="0.263" />
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="77dp"
-        android:layout_height="81dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:id="@+id/magasin_logo"
+        android:layout_width="84dp"
+        android:layout_height="89dp"
+        android:layout_marginStart="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

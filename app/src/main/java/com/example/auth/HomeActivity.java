@@ -122,6 +122,11 @@ public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.
     @Override
     public void onItemClick(DocumentSnapshot snapshot, int position) {
         Log.d("ITEM_CLICK", "Clicked an item : " + position + " and the ID is :" + snapshot.getId());
+        Intent intent= new Intent(this, MagasinActivity.class);
+        intent.putExtra(MagasinActivity.KEY_MAGASINS_ID, snapshot.getId());
+        startActivity(intent);
+
+
     }
 
 

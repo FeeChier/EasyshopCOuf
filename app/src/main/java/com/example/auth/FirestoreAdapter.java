@@ -1,22 +1,29 @@
 package com.example.auth;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.firebase.ui.firestore.paging.LoadingState;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class FirestoreAdapter extends FirestorePagingAdapter<ModelMagasin, FirestoreAdapter.MagasinViewHolder> {
 
     private OnListItemClick onListItemClick;
+
 
     public FirestoreAdapter(@NonNull FirestorePagingOptions<ModelMagasin> options, OnListItemClick onListItemClick) {
         super(options);
@@ -27,7 +34,10 @@ public class FirestoreAdapter extends FirestorePagingAdapter<ModelMagasin, Fires
     protected void onBindViewHolder(@NonNull MagasinViewHolder holder, int position, @NonNull ModelMagasin model) {
         holder.list_nom.setText(model.getNom());
         holder.list_adresse.setText(model.getAdresse());
+        Picasso.get().load(model.getPhoto()).into(holder.magasin_logo);
     }
+
+
 
     @NonNull
     @Override
@@ -61,13 +71,14 @@ public class FirestoreAdapter extends FirestorePagingAdapter<ModelMagasin, Fires
 
         private TextView list_nom;
         private TextView list_adresse;
+        private ImageView magasin_logo;
 
         public MagasinViewHolder(@NonNull View itemView) {
             super(itemView);
 
             list_nom = itemView.findViewById(R.id.list_name);
             list_adresse = itemView.findViewById(R.id.list_adresse);
-
+            magasin_logo = itemView.findViewById(R.id.magasin_logo);
             itemView.setOnClickListener(this);
         }
 

@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class OptionActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +29,7 @@ public class OptionActivity extends AppCompatActivity {
         logoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v.getId()==R.id.logoButton){
+                if (v.getId() == R.id.logoButton) {
                     startActivity(new Intent(OptionActivity.this, HomeActivity.class));
                 }
 
@@ -36,15 +37,17 @@ public class OptionActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.bottom_navigation, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nav_premium:
                 startActivity(new Intent(OptionActivity.this, PremiumActivity.class));
                 return true;
