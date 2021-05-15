@@ -30,7 +30,7 @@ public class ListAdapter extends FirestorePagingAdapter<ListModel, ListAdapter.L
     protected void onBindViewHolder(@NonNull @NotNull ListAdapter.ListHolder holder, int position, @NonNull @NotNull ListModel model) {
         holder.list_nom.setText(model.getNom());
         holder.list_description.setText(model.getDescription());
-        holder.list_prix.setText(model.getPrix());
+        holder.list_prix.setText(model.getPrix() + " €");
         holder.list_qtt.setText(model.getQtt());
         holder.list_total.setText(model.getTotal());
     }
