@@ -1,14 +1,18 @@
 package com.example.auth;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +39,7 @@ public class ListeActivity extends AppCompatActivity implements ListAdapter.OnLi
     private FirebaseFirestore mFirestore;
     String UserId;
     private FirebaseAuth mAuth;
+    ListViewModel listViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +52,6 @@ public class ListeActivity extends AppCompatActivity implements ListAdapter.OnLi
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         setUpRecyclerView();
         mfirestorelist = findViewById(R.id.liste_articles_added);
-
 
     }
 
@@ -101,8 +105,6 @@ public class ListeActivity extends AppCompatActivity implements ListAdapter.OnLi
     public void onItemClick(DocumentSnapshot snapshot, int position) {
         Intent intent= new Intent(this, ArticleActivity.class);
         intent.putExtra(ArticleActivity.KEY_ARTICLE_ID, snapshot.getId());
-        System.out.println(snapshot.getId());
         startActivity(new Intent(this,ArticleActivity.class));
     }
-
 }

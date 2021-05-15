@@ -78,4 +78,5 @@ public class Article {
     public void setQtt(int qtt) {
         this.qtt = qtt;
     }
+
 }

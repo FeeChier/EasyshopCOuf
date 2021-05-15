@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 public class ListAdapter extends FirestorePagingAdapter<ListModel, ListAdapter.ListHolder> {
 
     private OnListItemClick onListItemClick;
+    private int TotalPrice = 0;
 
     public ListAdapter(@NonNull @NotNull FirestorePagingOptions<ListModel> options, OnListItemClick onListItemClick) {
         super(options);
@@ -33,6 +34,10 @@ public class ListAdapter extends FirestorePagingAdapter<ListModel, ListAdapter.L
         holder.list_prix.setText(model.getPrix() + " €");
         holder.list_qtt.setText(model.getQtt());
         holder.list_total.setText(model.getTotal());
+
+        int oneProductTotalPrice = ((Integer.valueOf(model.getPrix())))*Integer.valueOf(model.getQtt());
+        TotalPrice = TotalPrice + oneProductTotalPrice;
+
     }
 
     @NonNull

@@ -106,7 +106,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
                     String description_complete = article.getDescription_complete();
                     mNameView.setText(""+ name );
                     mDescription.setText(""+ description);
-                    mPrix.setText(""+ prix+ " €");
+                    mPrix.setText(""+ prix);
                     mDescriptionComplete.setText(" "+description_complete);
                     Picasso.get().load(article.getPhoto()).into(mlogo);
                 } else {
