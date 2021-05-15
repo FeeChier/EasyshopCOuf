@@ -33,8 +33,6 @@ public class FirestoreAdapter extends FirestorePagingAdapter<ModelMagasin, Fires
         Picasso.get().load(model.getPhoto()).into(holder.magasin_logo);
     }
 
-
-
     @NonNull
     @Override
     public MagasinViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

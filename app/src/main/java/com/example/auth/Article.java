@@ -8,16 +8,18 @@ public class Article {
     private String itemId;
     private String photo;
     private String description_complete;
+    private int qtt;
 
     public Article(){}
 
-    public Article(String item, String name, String description, String price, String photo, String description_complete){
+    public Article(String item, String name, String description, String price, String photo, String description_complete, int qtt){
         this.description = description;
         this.price = price;
         this.name = name;
         this.itemId = item;
         this.photo = photo;
         this.description_complete = description_complete;
+        this.qtt = qtt;
     }
 
 
@@ -67,5 +69,13 @@ public class Article {
 
     public void setDescription_complete(String description_complete) {
         this.description_complete = description_complete;
+    }
+
+    public int getQtt() {
+        return qtt;
+    }
+
+    public void setQtt(int qtt) {
+        this.qtt = qtt;
     }
 }

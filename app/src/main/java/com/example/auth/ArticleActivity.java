@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,12 +40,13 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     private static final String TAG = "ArticleDetail";
     public static final String KEY_ARTICLE_ID = "key_article_id";
 
-    public static final String KEY_MAGASIN_ID = "key_magasin_id";
+    public static final String KEY_ARTICLE_ID2 = "article_id";
 
     private static final String KEY_NOM = "nom";
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_PRIX = "prix";
-
+    private static final String KEY_QTT = "qtt";
+    private static final String KEY_TOTAL = "total";
 
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     private DocumentReference mArticleRef;
@@ -59,6 +61,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private RecyclerView mArticleRecycler;
     private ViewGroup mEmptyView;
+    private EditText mqtt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +73,11 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
         mDescription = findViewById(R.id.article_description);
         mPrix = findViewById(R.id.article_prix);
         mDescriptionComplete = findViewById(R.id.description_complete);
+        mqtt = findViewById(R.id.qttEditText);
+
         findViewById(R.id.article_button_back).setOnClickListener(this);
         findViewById(R.id.article_add).setOnClickListener(this);
+
         String articleId = getIntent().getExtras().getString(KEY_ARTICLE_ID);
         String magasinIdd = MagasinActivity.getMagasinId();
         System.out.println(articleId + " " + magasinIdd);
@@ -124,28 +130,35 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     public void onBackArrowClicked(View view) {
         onBackPressed();
     }
-    public void onAddArticleClicked (View view){
+    public void onAddArticleClicked (View view) {
         String name = mNameView.getText().toString();
         String description = mDescription.getText().toString();
         String price = mPrix.getText().toString();
+        String articleId = getIntent().getExtras().getString(KEY_ARTICLE_ID);
+        String qtt = mqtt.getText().toString();
+        double qtti = Double.parseDouble(qtt);
+        double pricei = Double.parseDouble(price);
+        double totali = qtti*pricei;
+        String total = String.valueOf(totali);
 
-        Map<String, Object> articles = new HashMap<>();
-        articles.put(KEY_NOM, name);
-        articles.put(KEY_DESCRIPTION, description);
-        articles.put(KEY_PRIX, price);
-        UserId = mAuth.getCurrentUser().getUid();
-        mFirestore.collection("Users").document(UserId).collection("Articles").document().set(articles).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(ArticleActivity.this,"L'article a été ajouté", Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                Toast.makeText(ArticleActivity.this,"Erreur !", Toast.LENGTH_LONG).show();
-                Log.d(TAG, e.toString());
-            }
-        });
+            Map<String, Object> articles = new HashMap<>();
+            articles.put(KEY_NOM, name);
+            articles.put(KEY_DESCRIPTION, description);
+            articles.put(KEY_PRIX, price);
+            articles.put(KEY_QTT, qtt);
+            articles.put(KEY_TOTAL, total);
+            UserId = mAuth.getCurrentUser().getUid();
+            mFirestore.collection("Users").document(UserId).collection("Articles").document(articleId).set(articles).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(ArticleActivity.this, "L'article a été ajouté", Toast.LENGTH_LONG).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull @NotNull Exception e) {
+                    Toast.makeText(ArticleActivity.this, "Erreur !", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, e.toString());
+                }
+            });
+        }
     }
-
-}

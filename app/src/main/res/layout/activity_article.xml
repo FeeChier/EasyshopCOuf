@@ -11,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/article_top_card"
         app:srcCompat="@drawable/ic_add_white_24px" />
@@ -93,7 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/article_description"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="48dp"
         android:layout_toRightOf="@+id/article_description"
         android:text="5£"
@@ -113,6 +113,18 @@
         app:layout_constraintHorizontal_bias="0.325"
         app:layout_constraintStart_toStartOf="@+id/article_name"
         app:layout_constraintTop_toBottomOf="@+id/article_description" />
+
+    <EditText
+        android:id="@+id/qttEditText"
+        android:layout_width="97dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="12dp"
+        android:ems="10"
+        android:hint="Quantité..."
+        android:inputType="number"
+        app:layout_constraintEnd_toStartOf="@+id/article_add"
+        app:layout_constraintTop_toBottomOf="@+id/article_name" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
