@@ -8,10 +8,12 @@
         android:id="@+id/nav_options"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="Options"/>
-    <item
-        android:id="@+id/nav_signout"
-        android:title="Se déconnecter"/>
+
     <item
         android:id="@+id/nav_maliste"
         android:title="Ma liste"/>
+
+    <item
+        android:id="@+id/nav_signout"
+        android:title="Se déconnecter"/>
 </menu>

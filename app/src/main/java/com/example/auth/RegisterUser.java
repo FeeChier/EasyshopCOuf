@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -122,11 +123,14 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                         if (task.isSuccessful()) {
                             User user = new User(firstName, lastName, Email);
                             userId = mAuth.getCurrentUser().getUid();
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
                             DocumentReference documentReference = fstore.collection("Users").document(userId);
                             Map<String,Object> muser = new HashMap<>();
                             muser.put("nom",firstName);
                             muser.put("email",Email);
                             muser.put("prénom", lastName);
+
+                            currentUser.sendEmailVerification();
                             documentReference.set(muser).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
@@ -145,7 +149,8 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                 public void onComplete(@NonNull @NotNull Task<Void> task) {
 
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(RegisterUser.this, "L'utilisateur a été enregistré !", Toast.LENGTH_LONG).show();
+
+                                        Toast.makeText(RegisterUser.this, "L'utilisateur a été enregistré ! Vérifiez sur votre mail pour confirmer la création du compte", Toast.LENGTH_LONG).show();
                                         progressBar.setVisibility(View.GONE);
 
 

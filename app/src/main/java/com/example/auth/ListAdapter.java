@@ -35,9 +35,6 @@ public class ListAdapter extends FirestorePagingAdapter<ListModel, ListAdapter.L
         holder.list_qtt.setText(model.getQtt());
         holder.list_total.setText(model.getTotal());
 
-        int oneProductTotalPrice = ((Integer.valueOf(model.getPrix())))*Integer.valueOf(model.getQtt());
-        TotalPrice = TotalPrice + oneProductTotalPrice;
-
     }
 
     @NonNull

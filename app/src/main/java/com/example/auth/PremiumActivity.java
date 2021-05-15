@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +25,13 @@ public class PremiumActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         ImageButton logoButton = findViewById(R.id.logoButton);
-
+        Button essai = findViewById(R.id.essai_gratos);
+        essai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PremiumActivity.this, Paiement.class));
+            }
+        });
         logoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +62,8 @@ public class PremiumActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(PremiumActivity.this, MainActivity.class));
                 return true;
+            case R.id.nav_maliste:
+                startActivity(new Intent(PremiumActivity.this, ListeActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }

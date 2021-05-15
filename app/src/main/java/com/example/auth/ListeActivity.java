@@ -14,6 +14,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -50,11 +53,35 @@ public class ListeActivity extends AppCompatActivity implements ListAdapter.OnLi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        setUpRecyclerView();
         mfirestorelist = findViewById(R.id.liste_articles_added);
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_premium:
+                startActivity(new Intent(ListeActivity.this, PremiumActivity.class));
+                return true;
+            case R.id.nav_options:
+                startActivity(new Intent(ListeActivity.this, OptionActivity.class));
+                return true;
+            case R.id.nav_signout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(ListeActivity.this, MainActivity.class));
+                return true;
+            case R.id.nav_maliste:
+                startActivity(new Intent(ListeActivity.this, ListeActivity.class));
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.bottom_navigation, menu);
+        return true;
+    }
     private void setUpRecyclerView() {
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
