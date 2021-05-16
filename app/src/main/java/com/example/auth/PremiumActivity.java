@@ -24,8 +24,9 @@ public class PremiumActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         ImageButton logoButton = findViewById(R.id.logoButton);
-        Button essai = findViewById(R.id.essai_gratos);
+        Button essai = findViewById(R.id.paiement);
         essai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

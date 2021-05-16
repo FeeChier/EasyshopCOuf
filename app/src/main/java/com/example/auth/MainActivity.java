@@ -2,11 +2,9 @@ package com.example.auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelStoreOwner;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signIn = (Button) findViewById(R.id.connexionButton);
         signIn.setOnClickListener(this);
 
-        editTextEmail = (EditText) findViewById(R.id.email_connexion_text);
+        editTextEmail = (EditText) findViewById(R.id.paiement_date_expi);
         editTextPassword = (EditText) findViewById(R.id.password_connexion_text);
 
         progressBar = (ProgressBar) findViewById(R.id.connexion_progressbar);

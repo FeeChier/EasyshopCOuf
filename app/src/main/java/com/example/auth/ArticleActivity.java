@@ -104,10 +104,10 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
                     String description = article.getDescription();
                     String prix = article.getPrice();
                     String description_complete = article.getDescription_complete();
-                    mNameView.setText(""+ name );
-                    mDescription.setText(""+ description);
-                    mPrix.setText(""+ prix);
-                    mDescriptionComplete.setText(" "+description_complete);
+                    mNameView.setText("" + name);
+                    mDescription.setText("" + description);
+                    mPrix.setText("" + prix);
+                    mDescriptionComplete.setText(" " + description_complete);
                     Picasso.get().load(article.getPhoto()).into(mlogo);
                 } else {
                     mNameView.setText("");
@@ -115,6 +115,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -127,28 +128,41 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    public String getArticleId() {
+
+        String articleId = getIntent().getExtras().getString(KEY_ARTICLE_ID);
+        System.out.println(articleId);
+        return articleId;
+    }
+
     public void onBackArrowClicked(View view) {
         onBackPressed();
     }
-    public void onAddArticleClicked (View view) {
+
+    public void onAddArticleClicked(View view) {
         String name = mNameView.getText().toString();
         String description = mDescription.getText().toString();
         String price = mPrix.getText().toString();
         String articleId = getIntent().getExtras().getString(KEY_ARTICLE_ID);
         String qtt = mqtt.getText().toString();
-        double qtti = Double.parseDouble(qtt);
-        double pricei = Double.parseDouble(price);
-        double totali = qtti*pricei;
-        String total = String.valueOf(totali);
+        if (qtt.isEmpty()) {
+
+            String qtt1 = "1";
+
+            double qtt1d = Double.parseDouble(qtt1);
+            double priceid = Double.parseDouble(price);
+            double totalid = qtt1d * priceid;
+            String Totalid = String.valueOf(totalid);
 
             Map<String, Object> articles = new HashMap<>();
+
             articles.put(KEY_NOM, name);
             articles.put(KEY_DESCRIPTION, description);
             articles.put(KEY_PRIX, price);
-            articles.put(KEY_QTT, qtt);
-            articles.put(KEY_TOTAL, total);
+            articles.put(KEY_QTT, qtt1);
+            articles.put(KEY_TOTAL, Totalid);
             UserId = mAuth.getCurrentUser().getUid();
-            mFirestore.collection("Users").document(UserId).collection("Articles").document(articleId).set(articles).addOnSuccessListener(new OnSuccessListener<Void>() {
+            mFirestore.collection("Users").document(UserId).collection("Articles").document(getArticleId()).set(articles).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
                     Toast.makeText(ArticleActivity.this, "L'article a été ajouté", Toast.LENGTH_LONG).show();
@@ -160,5 +174,35 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
                     Log.d(TAG, e.toString());
                 }
             });
+        return;
+        } else {
+
+            double qtti = Double.parseDouble(qtt);
+            double pricei = Double.parseDouble(price);
+            double totali = qtti * pricei;
+            String total = String.valueOf(totali);
+            Map<String, Object> articles = new HashMap<>();
+
+            articles.put(KEY_NOM, name);
+            articles.put(KEY_DESCRIPTION, description);
+            articles.put(KEY_PRIX, price);
+            articles.put(KEY_QTT, qtt);
+            articles.put(KEY_TOTAL, total);
+            UserId = mAuth.getCurrentUser().getUid();
+            mFirestore.collection("Users").document(UserId).collection("Articles").document(getArticleId()).set(articles).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(ArticleActivity.this, "L'article a été ajouté", Toast.LENGTH_LONG).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull @NotNull Exception e) {
+                    Toast.makeText(ArticleActivity.this, "Erreur !", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, e.toString());
+                }
+            });
+        return;
         }
+
     }
+}

@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/connexion_string">
 
         <ImageView
-            android:id="@+id/enveloppe"
+            android:id="@+id/carte"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -56,7 +56,7 @@
             app:srcCompat="@drawable/icon_email" />
 
         <EditText
-            android:id="@+id/email_connexion_text"
+            android:id="@+id/paiement_date_expi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="50"

@@ -114,7 +114,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/essai_gratos"
+            android:id="@+id/paiement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"

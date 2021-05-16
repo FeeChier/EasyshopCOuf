@@ -104,35 +104,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="7 jours d'essai gratuit"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView15" />
-
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/essai_gratos"
+            android:id="@+id/paiement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="100dp"
             android:background="@drawable/input_bg"
             android:fontFamily="@font/raleway_semibold"
             android:padding="10dp"
-            android:text="Démarrez votre essai !"
+            android:text="A VOS COURSES !"
             android:textAlignment="center"
             android:textColor="@color/lightgrey"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

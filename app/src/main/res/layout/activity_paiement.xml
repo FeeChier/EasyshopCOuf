@@ -4,6 +4,176 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbarSize="32dp"
     tools:context=".Paiement">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/paiement_plus_tard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/primary_btn_bg"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/raleway_bold"
+        android:text="Peut-être plus tard !"
+        android:textAllCaps="false"
+        android:textColor="#826A6A"
+        app:iconTint="@color/yellowez"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paiement_confirmer_Button" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/paiement_confirmer_Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/primary_btn_bg"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/raleway_bold"
+        android:text="Confirmer"
+        android:textAllCaps="false"
+        android:textColor="#826A6A"
+        app:iconTint="@color/yellowez"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCB" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutdateexpi"
+        android:layout_width="151dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/input_bg"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11">
+
+        <EditText
+            android:id="@+id/paiement_date_expi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:background="@color/yellowez"
+            android:ems="10"
+            android:fontFamily="@font/raleway_bold"
+            android:inputType="date|datetime" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCVV"
+        android:layout_width="151dp"
+        android:layout_height="34dp"
+        android:background="@drawable/input_bg"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayoutCB"
+        app:layout_constraintTop_toTopOf="@+id/linearLayoutdateexpi">
+
+        <EditText
+            android:id="@+id/paiement_CVV"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:background="@color/yellowez"
+            android:ems="10"
+            android:fontFamily="@font/raleway_bold"
+            android:inputType="number"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        tools:layout_editor_absoluteX="-61dp"
+        tools:layout_editor_absoluteY="73dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCB"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/input_bg"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18">
+
+        <ImageView
+            android:id="@+id/carte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="25"
+            app:srcCompat="@drawable/ic_baseline_credit_card_24" />
+
+        <EditText
+            android:id="@+id/paiement_CB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:background="@color/yellowez"
+            android:ems="10"
+            android:fontFamily="@font/raleway_bold"
+            android:hint="Numéro Carte Bancaire..."
+            android:inputType="number"
+            android:padding="16dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/raleway_semibold"
+        android:text="Date d'expiration"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCB" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/raleway_semibold"
+        android:text="CVV"
+        app:layout_constraintStart_toStartOf="@+id/linearLayoutCVV"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCB" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="170dp"
+        android:text="Bienvenue parmi nous, les EASYSHOPERS !"
+        android:textAlignment="center"
+        android:textSize="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="289dp"
+        android:layout_height="177dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:srcCompat="@drawable/illustration_paiement"
+        tools:layout_editor_absoluteX="61dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

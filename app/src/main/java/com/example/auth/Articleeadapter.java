@@ -65,13 +65,14 @@ public abstract class Articleeadapter extends FirestoreeAdapter<Articleeadapter.
         TextView descriptionView;
         ImageView article_image;
         TextView prix;
-        TextView nameViewmag;
-        FloatingActionButton add;
         FloatingActionButton delete;
+        private ArticleActivity articleActivity = new ArticleActivity();
 
-        private FirebaseFirestore fstore;
-        private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String UserId;
+
+        public String Id (){
+            String a = articleActivity.getArticleId();
+            return a;
+        }
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -79,7 +80,6 @@ public abstract class Articleeadapter extends FirestoreeAdapter<Articleeadapter.
             descriptionView = itemView.findViewById(R.id.article_magasin_description);
             prix = itemView.findViewById(R.id.article_magasin_prix);
             article_image = itemView.findViewById(R.id.image_article);
-            add = itemView.findViewById(R.id.add_article);
             delete = itemView.findViewById(R.id.delete_article);
 
 
@@ -87,30 +87,12 @@ public abstract class Articleeadapter extends FirestoreeAdapter<Articleeadapter.
 
         public void bind(final DocumentSnapshot snapshot,
                          final OnArticleSelectedListener listener) {
-
             Article article = snapshot.toObject(Article.class);
             Resources resources = itemView.getResources();
             nameView.setText(article.getName());
             descriptionView.setText(article.getDescription());
             prix.setText(article.getPrice());
             Picasso.get().load(article.getPhoto()).into(article_image);
-            add.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String nom = nameView.getText().toString();
-                    String description = descriptionView.getText().toString();
-                    String prixarticle = prix.getText().toString();
-
-                    Map<String, Object> articles = new HashMap<>();
-                    articles.put(KEY_NOM, nom);
-                    articles.put(KEY_DESCRIPTION, description);
-                    articles.put(KEY_PRIX, prixarticle);
-                    UserId = mAuth.getCurrentUser().getUid();
-                    FirebaseFirestore.getInstance().collection("Users")
-                            .document(UserId).collection("Articles")
-                            .document().set(articles);
-                }
-            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
