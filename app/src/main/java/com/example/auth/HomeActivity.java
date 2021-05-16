@@ -1,29 +1,26 @@
 package com.example.auth;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.example.auth.Adapter.CategoryAdapter;
+import com.example.auth.Adapter.FirestoreAdapter;
+import com.example.auth.Model.Category;
+import com.example.auth.Model.ModelMagasin;
+import com.example.auth.Premium.PremiumActivity;
 import com.firebase.ui.firestore.SnapshotParser;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
@@ -32,7 +29,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.auth.R.drawable.ic_home_fish;
+import static com.example.auth.R.drawable.ic_home_fruits;
+import static com.example.auth.R.drawable.ic_home_meats;
+import static com.example.auth.R.drawable.ic_home_veggies;
 
 public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.OnListItemClick{
     private FirebaseFirestore firebaseFirestore;
@@ -44,6 +47,9 @@ public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.
     private ImageButton btt;
 
 
+    CategoryAdapter categoryAdapter;
+    List<Category> categoryList;
+    RecyclerView categoryRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +97,16 @@ public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.
         mfirestorelist.setLayoutManager(new LinearLayoutManager(this));
         mfirestorelist.setAdapter(adapter);
 
+        categoryRecyclerView = findViewById(R.id.recycler_topCategorie);
+        categoryList = new ArrayList<>();
+        categoryList.add(new Category(1, R.drawable.fruits));
+        categoryList.add(new Category(2, R.drawable.cookies));
+        categoryList.add(new Category(3, R.drawable.meat));
+        categoryList.add(new Category(4, R.drawable.vegetable));
+
+
+
+        setCategoryRecycler(categoryList);
     }
 
 
@@ -128,8 +144,13 @@ public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.
         Intent intent= new Intent(this, MagasinActivity.class);
         intent.putExtra(MagasinActivity.KEY_MAGASINS_ID, snapshot.getId());
         startActivity(intent);
+    }
 
-
+    private void setCategoryRecycler(List<Category> categoryDataList) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        categoryRecyclerView.setLayoutManager(layoutManager);
+        categoryAdapter = new CategoryAdapter(this,categoryDataList);
+        categoryRecyclerView.setAdapter(categoryAdapter);
     }
 
 

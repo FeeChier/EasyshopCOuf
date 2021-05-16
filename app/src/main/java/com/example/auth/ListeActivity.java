@@ -1,28 +1,22 @@
 package com.example.auth;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.example.auth.Adapter.ListAdapter;
+import com.example.auth.Model.ListModel;
+import com.example.auth.Model.ListViewModel;
+import com.example.auth.Premium.PremiumActivity;
 import com.firebase.ui.firestore.SnapshotParser;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
@@ -30,10 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class ListeActivity extends AppCompatActivity implements ListAdapter.OnListItemClick {
 
@@ -55,34 +45,6 @@ public class ListeActivity extends AppCompatActivity implements ListAdapter.OnLi
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mfirestorelist = findViewById(R.id.liste_articles_added);
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_premium:
-                startActivity(new Intent(ListeActivity.this, PremiumActivity.class));
-                return true;
-            case R.id.nav_options:
-                startActivity(new Intent(ListeActivity.this, OptionActivity.class));
-                return true;
-            case R.id.nav_signout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(ListeActivity.this, MainActivity.class));
-                return true;
-            case R.id.nav_maliste:
-                startActivity(new Intent(ListeActivity.this, ListeActivity.class));
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.bottom_navigation, menu);
-        return true;
-    }
-    private void setUpRecyclerView() {
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         UserId = mAuth.getCurrentUser().getUid();
@@ -114,18 +76,49 @@ public class ListeActivity extends AppCompatActivity implements ListAdapter.OnLi
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_premium:
+                startActivity(new Intent(ListeActivity.this, PremiumActivity.class));
+                return true;
+            case R.id.nav_options:
+                startActivity(new Intent(ListeActivity.this, OptionActivity.class));
+                return true;
+            case R.id.nav_signout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(ListeActivity.this, MainActivity.class));
+                return true;
+            case R.id.nav_maliste:
+                startActivity(new Intent(ListeActivity.this, ListeActivity.class));
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.bottom_navigation, menu);
+        return true;
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        adapter.startListening();
+        if (adapter != null) {
+            adapter.startListening();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        adapter.stopListening();
+        if (adapter != null) {
+            adapter.startListening();}
+
     }
 
     @Override

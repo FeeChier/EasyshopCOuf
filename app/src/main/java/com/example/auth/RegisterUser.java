@@ -10,11 +10,11 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.auth.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -129,6 +129,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                             muser.put("nom",firstName);
                             muser.put("email",Email);
                             muser.put("prénom", lastName);
+                            muser.put("premiumUser", false);
 
                             currentUser.sendEmailVerification();
                             documentReference.set(muser).addOnSuccessListener(new OnSuccessListener<Void>() {

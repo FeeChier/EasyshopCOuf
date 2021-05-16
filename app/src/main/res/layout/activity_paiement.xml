@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarSize="32dp"
-    tools:context=".Paiement">
+    tools:context=".Premium.Paiement">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/paiement_plus_tard"

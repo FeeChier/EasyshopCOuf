@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.example.auth.Premium.PremiumActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class OptionActivity extends AppCompatActivity {
