@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -13,11 +14,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.auth.Premium.HomePremiumActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,11 +31,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView register;
     private EditText editTextEmail, editTextPassword;
     private Button signIn;
-
+    public static final String TAG = "ConnexionDetail";
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
 
-
+String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +106,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if (user.isEmailVerified()) {
 
-                        progressBar.setVisibility(View.GONE);
-                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                        mAuth = FirebaseAuth.getInstance();
+                        FirebaseFirestore fstore = FirebaseFirestore.getInstance();
+                        userId = mAuth.getCurrentUser().getUid();
+                        DocumentReference documentReference = fstore.collection("Users").document(userId);
+                        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        Boolean PremiumUser = (Boolean) document.getBoolean("premiumUser");
+                                        if (PremiumUser == false){
+                                        progressBar.setVisibility(View.GONE);
+                                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                                        }else{
+
+                                            progressBar.setVisibility(View.GONE);
+                                            startActivity(new Intent(MainActivity.this, HomePremiumActivity.class));
+                                        }
+                                    } else {
+
+                                        Log.d(TAG, "No such document");
+                                    }
+                                } else {
+                                    Log.d(TAG, "get failed with ", task.getException());
+                                }
+                            }
+                        });
 
                     } else {
                         user.sendEmailVerification();

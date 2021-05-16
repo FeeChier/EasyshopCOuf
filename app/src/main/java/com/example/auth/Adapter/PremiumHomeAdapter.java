@@ -1,5 +1,6 @@
 package com.example.auth.Adapter;
 
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,80 +11,78 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.auth.ArticleActivity;
+import com.example.auth.Model.Article;
 import com.example.auth.Model.ModelMagasin;
+import com.example.auth.Premium.HomePremiumActivity;
 import com.example.auth.R;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.firebase.ui.firestore.paging.LoadingState;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
-public class PremiumHomeAdapter extends FirestorePagingAdapter<ModelMagasin, PremiumHomeAdapter.MagasinViewHolder> {
-
-    private OnListItemClick onListItemClick;
+public abstract class PremiumHomeAdapter extends FirestoreeAdapter<PremiumHomeAdapter.ViewHolder> {
 
 
-    public PremiumHomeAdapter(@NonNull FirestorePagingOptions<ModelMagasin> options, OnListItemClick onListItemClick) {
-        super(options);
-        this.onListItemClick = onListItemClick;
-    }
+public interface OnPremiumSelectedListener {
+    void onPremiumSelected(DocumentSnapshot magasin);
+}
 
-    @Override
-    protected void onBindViewHolder(@NonNull MagasinViewHolder holder, int position, @NonNull ModelMagasin model) {
-        holder.list_nom.setText(model.getNom());
-        holder.list_adresse.setText(model.getAdresse());
-        Picasso.get().load(model.getPhoto()).into(holder.magasin_logo);
+    private OnPremiumSelectedListener mListener;
+
+    public PremiumHomeAdapter(Query query, OnPremiumSelectedListener listener) {
+        super(query);
+        mListener = listener;
     }
 
     @NonNull
     @Override
-    public MagasinViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_single, parent, false);
-        return new MagasinViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_item_premium_magasin, parent, false));
     }
 
     @Override
-    protected void onLoadingStateChanged(@NonNull LoadingState state) {
-        super.onLoadingStateChanged(state);
-        switch (state) {
-            case LOADING_INITIAL:
-                Log.d("PAGING_LOG", "Loading Initial Data");
-                break;
-            case LOADING_MORE:
-                Log.d("PAGING_LOG", "Loading Next Page");
-                break;
-            case FINISHED:
-                Log.d("PAGING_LOG", "All Data Loaded");
-            case ERROR:
-                Log.d("PAGING_LOG", "Error Loading Data");
-                break;
-            case LOADED:
-                Log.d("PAGING_LOG", "Total Items Loaded : " + getItemCount());
-                break;
-        }
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(getSnapshot(position), mListener);
     }
 
-    public class MagasinViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView list_nom;
-        private TextView list_adresse;
-        private ImageView magasin_logo;
+class ViewHolder extends RecyclerView.ViewHolder {
 
-        public MagasinViewHolder(@NonNull View itemView) {
-            super(itemView);
+    TextView nameView;
+    TextView adresseView;
+    ImageView magasin_image;
 
-            list_nom = itemView.findViewById(R.id.list_description);
-            list_adresse = itemView.findViewById(R.id.list_name);
-            magasin_logo = itemView.findViewById(R.id.magasin_logo);
-            itemView.setOnClickListener(this);
-        }
 
-        @Override
-        public void onClick(View v) {
-            onListItemClick.onItemClick(getItem(getAdapterPosition()),getAdapterPosition());
-        }
+
+    public ViewHolder(View itemView) {
+        super(itemView);
+        nameView = itemView.findViewById(R.id.list_namepremium);
+        adresseView = itemView.findViewById(R.id.list_adressepremium);
+        magasin_image = itemView.findViewById(R.id.magasin_logopremium);
+
+
     }
-    public interface OnListItemClick {
-        void onItemClick(DocumentSnapshot snapshot, int position);
+
+    public void bind(final DocumentSnapshot snapshot,
+                     final OnPremiumSelectedListener listener) {
+        ModelMagasin modelMagasin = snapshot.toObject(ModelMagasin.class);
+        nameView.setText(modelMagasin.getNom());
+        adresseView.setText(modelMagasin.getAdresse());
+        Picasso.get().load(modelMagasin.getPhoto()).into(magasin_image);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onPremiumSelected(snapshot);
+                }
+            }
+        });
     }
+}
+
 }

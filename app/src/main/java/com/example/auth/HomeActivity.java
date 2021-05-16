@@ -132,6 +132,7 @@ public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.
                 return true;
             case R.id.nav_maliste:
                 startActivity(new Intent(HomeActivity.this, ListeActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

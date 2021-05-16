@@ -2,56 +2,51 @@ package com.example.auth.Premium;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.auth.Adapter.CategoryAdapter;
 import com.example.auth.Adapter.DiscountedProductAdapter;
-import com.example.auth.Adapter.RecentlyViewedAdapter;
 import com.example.auth.AllCategory;
 import com.example.auth.Model.Category;
 import com.example.auth.Model.DiscountedProducts;
-import com.example.auth.Model.RecentlyViewed;
+import com.example.auth.Model.ModelMagasin;
 import com.example.auth.OptionPremiumCategorie;
 import com.example.auth.R;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.auth.R.drawable.*;
-import static com.example.auth.R.drawable.b1;
-import static com.example.auth.R.drawable.b2;
-import static com.example.auth.R.drawable.b3;
-import static com.example.auth.R.drawable.b4;
-import static com.example.auth.R.drawable.card1;
-import static com.example.auth.R.drawable.card2;
-import static com.example.auth.R.drawable.card3;
-import static com.example.auth.R.drawable.card4;
 import static com.example.auth.R.drawable.discountberry;
 import static com.example.auth.R.drawable.discountbrocoli;
 import static com.example.auth.R.drawable.discountmeat;
-import static com.example.auth.R.drawable.ic_home_fish;
-import static com.example.auth.R.drawable.ic_home_fruits;
-import static com.example.auth.R.drawable.ic_home_meats;
-import static com.example.auth.R.drawable.ic_home_veggies;
 
-public class HomePremiumActivity extends AppCompatActivity implements View.OnClickListener{
+public class HomePremiumActivity extends AppCompatActivity implements View.OnClickListener {
 
-    RecyclerView discountRecyclerView, categoryRecyclerView, recentlyViewedRecycler;
+    RecyclerView discountRecyclerView, categoryRecyclerView;
     DiscountedProductAdapter discountedProductAdapter;
     List<DiscountedProducts> discountedProductsList;
+    private FirebaseFirestore firebaseFirestore;
+    private FirestoreRecyclerAdapter adapter;
 
+    private RecyclerView mfirestorelist;
     CategoryAdapter categoryAdapter;
     List<Category> categoryList;
 
-    RecentlyViewedAdapter recentlyViewedAdapter;
-    List<RecentlyViewed> recentlyViewedList;
 
+    private ViewGroup mEmptyView;
     TextView allCategory;
     ImageView cart;
     ImageView option;
@@ -61,10 +56,39 @@ public class HomePremiumActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_premium_home);
 
+        mEmptyView = findViewById(R.id.view_empty_article);
+        mfirestorelist = findViewById(R.id.magasinproche_item);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        Query query = firebaseFirestore.collection("Magasins");
+
+        FirestoreRecyclerOptions<ModelMagasin> options = new FirestoreRecyclerOptions.Builder<ModelMagasin>()
+                .setQuery(query, ModelMagasin.class)
+                .build();
+
+        adapter = new FirestoreRecyclerAdapter<ModelMagasin, MagasinViewHolder>(options) {
+            @NonNull
+            @Override
+            public MagasinViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_premium_magasin,parent,false);
+                return new MagasinViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull MagasinViewHolder holder, int position, @NonNull ModelMagasin model) {
+                holder.magasin_name_premium.setText(model.getNom());
+                holder.magasin_adresse_premium.setText(model.getAdresse());
+            }
+        };
+        mfirestorelist.setHasFixedSize(true);
+        mfirestorelist.setLayoutManager(new LinearLayoutManager(this));
+        mfirestorelist.setAdapter(adapter);
+
+
+
         discountRecyclerView = findViewById(R.id.discountedRecycler);
         categoryRecyclerView = findViewById(R.id.categoryRecycler);
         allCategory = findViewById(R.id.allCategoryImage);
-        recentlyViewedRecycler = findViewById(R.id.recently_item);
 
         cart = findViewById(R.id.cartpremium);
         option = findViewById(R.id.optionpremium);
@@ -75,7 +99,7 @@ public class HomePremiumActivity extends AppCompatActivity implements View.OnCli
         cart.setOnClickListener(this);
         option.setOnClickListener(this);
 
-        // adding data to model
+        // Ajout data to model
         discountedProductsList = new ArrayList<>();
         discountedProductsList.add(new DiscountedProducts(1, discountberry));
         discountedProductsList.add(new DiscountedProducts(2, discountbrocoli));
@@ -84,23 +108,15 @@ public class HomePremiumActivity extends AppCompatActivity implements View.OnCli
         discountedProductsList.add(new DiscountedProducts(5, discountbrocoli));
         discountedProductsList.add(new DiscountedProducts(6, discountmeat));
 
-        // adding data to model
+        // Ajout data to model
         categoryList = new ArrayList<>();
         categoryList.add(new Category(1, R.drawable.fruits));
         categoryList.add(new Category(2, R.drawable.cookies));
         categoryList.add(new Category(3, R.drawable.meat));
         categoryList.add(new Category(4, R.drawable.vegetable));
 
-        // adding data to model
-       recentlyViewedList = new ArrayList<>();
-       recentlyViewedList.add(new RecentlyViewed("Watermelon", "Watermelon has high water content and also provides some fiber.", "₹ 80", "1", "KG", card4, b4));
-       recentlyViewedList.add(new RecentlyViewed("Papaya", "Papayas are spherical or pear-shaped fruits that can be as long as 20 inches.", "₹ 85", "1", "KG", card3, b3));
-       recentlyViewedList.add(new RecentlyViewed("Strawberry", "The strawberry is a highly nutritious fruit, loaded with vitamin C.", "₹ 30", "1", "KG", card2, b1));
-       recentlyViewedList.add(new RecentlyViewed("Kiwi", "Full of nutrients like vitamin C, vitamin K, vitamin E, folate, and potassium.", "₹ 30", "1", "PC", card1, b2));
-
         setDiscountedRecycler(discountedProductsList);
         setCategoryRecycler(categoryList);
-       setRecentlyViewedRecycler(recentlyViewedList);
 
     }
 
@@ -111,6 +127,17 @@ public class HomePremiumActivity extends AppCompatActivity implements View.OnCli
         discountRecyclerView.setAdapter(discountedProductAdapter);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
 
     private void setCategoryRecycler(List<Category> categoryDataList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -119,12 +146,6 @@ public class HomePremiumActivity extends AppCompatActivity implements View.OnCli
         categoryRecyclerView.setAdapter(categoryAdapter);
     }
 
-    private void setRecentlyViewedRecycler(List<RecentlyViewed> recentlyViewedDataList) {
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recentlyViewedRecycler.setLayoutManager(layoutManager);
-        recentlyViewedAdapter = new RecentlyViewedAdapter(this,recentlyViewedDataList);
-        recentlyViewedRecycler.setAdapter(recentlyViewedAdapter);
-    }
 
     @Override
     public void onClick(View v) {
@@ -142,6 +163,19 @@ public class HomePremiumActivity extends AppCompatActivity implements View.OnCli
 
         }
     }
-    //Now again we need to create a adapter and model class for recently viewed items.
-    // lets do it fast.
+
+
+    private class MagasinViewHolder extends RecyclerView.ViewHolder{
+        private TextView magasin_name_premium;
+        private TextView magasin_adresse_premium;
+        private ImageView logo;
+
+        public MagasinViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            magasin_adresse_premium = itemView.findViewById(R.id.list_adressepremium);
+            magasin_name_premium = itemView.findViewById(R.id.list_namepremium);
+            logo = itemView.findViewById(R.id.magasin_logopremium);
+        }
+    }
 }
