@@ -5,24 +5,37 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.auth.Adapter.Articleeadapter;
 import com.example.auth.Adapter.CategoryAdapter;
 import com.example.auth.Adapter.DiscountedProductAdapter;
+import com.example.auth.Adapter.FirestoreAdapter;
+import com.example.auth.Adapter.PremiumHomeAdapter;
 import com.example.auth.AllCategory;
 import com.example.auth.Model.Category;
 import com.example.auth.Model.DiscountedProducts;
+import com.example.auth.Model.MagasinPremiumModel;
 import com.example.auth.Model.ModelMagasin;
 import com.example.auth.OptionPremiumCategorie;
 import com.example.auth.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.SnapshotParser;
+import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -33,15 +46,15 @@ import static com.example.auth.R.drawable.discountberry;
 import static com.example.auth.R.drawable.discountbrocoli;
 import static com.example.auth.R.drawable.discountmeat;
 
-public class HomePremiumActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomePremiumActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, AdapterView.OnItemClickListener, FirestoreAdapter.OnListItemClick {
 
     RecyclerView discountRecyclerView, categoryRecyclerView;
     DiscountedProductAdapter discountedProductAdapter;
     List<DiscountedProducts> discountedProductsList;
-    private FirebaseFirestore firebaseFirestore;
-    private FirestoreRecyclerAdapter adapter;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference collectionReference = db.collection("Magasins");
+    private FirestoreAdapter adapter;
 
-    private RecyclerView mfirestorelist;
     CategoryAdapter categoryAdapter;
     List<Category> categoryList;
 
@@ -50,6 +63,7 @@ public class HomePremiumActivity extends AppCompatActivity implements View.OnCli
     TextView allCategory;
     ImageView cart;
     ImageView option;
+    private Articleeadapter mArticleAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,34 +71,12 @@ public class HomePremiumActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_premium_home);
 
         mEmptyView = findViewById(R.id.view_empty_article);
-        mfirestorelist = findViewById(R.id.magasinproche_item);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        Query query = firebaseFirestore.collection("Magasins");
-
-        FirestoreRecyclerOptions<ModelMagasin> options = new FirestoreRecyclerOptions.Builder<ModelMagasin>()
-                .setQuery(query, ModelMagasin.class)
-                .build();
-
-        adapter = new FirestoreRecyclerAdapter<ModelMagasin, MagasinViewHolder>(options) {
-            @NonNull
-            @Override
-            public MagasinViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_premium_magasin,parent,false);
-                return new MagasinViewHolder(view);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull MagasinViewHolder holder, int position, @NonNull ModelMagasin model) {
-                holder.magasin_name_premium.setText(model.getNom());
-                holder.magasin_adresse_premium.setText(model.getAdresse());
-            }
-        };
-        mfirestorelist.setHasFixedSize(true);
-        mfirestorelist.setLayoutManager(new LinearLayoutManager(this));
-        mfirestorelist.setAdapter(adapter);
-
-
+        Spinner spinner = findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence>adaptera = ArrayAdapter.createFromResource(this,R.array.numbers, android.R.layout.simple_spinner_item);
+        adaptera.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adaptera);
+        spinner.setOnItemSelectedListener(this);
 
         discountRecyclerView = findViewById(R.id.discountedRecycler);
         categoryRecyclerView = findViewById(R.id.categoryRecycler);
@@ -101,12 +93,10 @@ public class HomePremiumActivity extends AppCompatActivity implements View.OnCli
 
         // Ajout data to model
         discountedProductsList = new ArrayList<>();
-        discountedProductsList.add(new DiscountedProducts(1, discountberry));
-        discountedProductsList.add(new DiscountedProducts(2, discountbrocoli));
-        discountedProductsList.add(new DiscountedProducts(3, discountmeat));
-        discountedProductsList.add(new DiscountedProducts(4, discountberry));
-        discountedProductsList.add(new DiscountedProducts(5, discountbrocoli));
-        discountedProductsList.add(new DiscountedProducts(6, discountmeat));
+        discountedProductsList.add(new DiscountedProducts(1, R.drawable.vegetable));
+        discountedProductsList.add(new DiscountedProducts(2, R.drawable.meat));
+        discountedProductsList.add(new DiscountedProducts(3, R.drawable.cookies));
+        discountedProductsList.add(new DiscountedProducts(4, R.drawable.fruits));
 
         // Ajout data to model
         categoryList = new ArrayList<>();
@@ -117,7 +107,47 @@ public class HomePremiumActivity extends AppCompatActivity implements View.OnCli
 
         setDiscountedRecycler(discountedProductsList);
         setCategoryRecycler(categoryList);
+        setUpRecyclerView();
+    }
 
+    private void setUpRecyclerView() {
+
+        Query query =collectionReference;
+        /*
+        FirestoreRecyclerOptions options = new FirestoreRecyclerOptions.Builder<MagasinPremiumModel>()
+                .setQuery(query, MagasinPremiumModel.class)
+                .build();
+        adapter = new PremiumHomeAdapter(options);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);*/
+
+        RecyclerView mfirestorelist = findViewById(R.id.premiummagasin);
+        PagedList.Config config = new PagedList.Config.Builder()
+                .setInitialLoadSizeHint(5)
+                .setPageSize(3)
+                .build();
+
+        FirestorePagingOptions<ModelMagasin> options = new FirestorePagingOptions.Builder<ModelMagasin>()
+                .setLifecycleOwner(this)
+                .setQuery(query, config, new SnapshotParser<ModelMagasin>() {
+                    @NonNull
+                    @Override
+                    public ModelMagasin parseSnapshot(@NonNull DocumentSnapshot snapshot) {
+                        ModelMagasin modelMagasin = snapshot.toObject(ModelMagasin.class);
+                        String itemId = snapshot.getId();
+                        modelMagasin.setItem_id(itemId);
+                        return modelMagasin;
+                    }
+                })
+                .build();
+
+        adapter = new FirestoreAdapter(options, this);
+
+
+        mfirestorelist.setHasFixedSize(true);
+        mfirestorelist.setLayoutManager(new LinearLayoutManager(this));
+        mfirestorelist.setAdapter(adapter);
     }
 
     private void setDiscountedRecycler(List<DiscountedProducts> dataList) {
@@ -165,17 +195,24 @@ public class HomePremiumActivity extends AppCompatActivity implements View.OnCli
     }
 
 
-    private class MagasinViewHolder extends RecyclerView.ViewHolder{
-        private TextView magasin_name_premium;
-        private TextView magasin_adresse_premium;
-        private ImageView logo;
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        public MagasinViewHolder(@NonNull View itemView) {
-            super(itemView);
+    }
 
-            magasin_adresse_premium = itemView.findViewById(R.id.list_adressepremium);
-            magasin_name_premium = itemView.findViewById(R.id.list_namepremium);
-            logo = itemView.findViewById(R.id.magasin_logopremium);
-        }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onItemClick(DocumentSnapshot snapshot, int position) {
+
     }
 }

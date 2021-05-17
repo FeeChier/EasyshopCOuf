@@ -61,9 +61,6 @@ public class PremiumActivity extends AppCompatActivity {
             case R.id.nav_premium:
                 startActivity(new Intent(PremiumActivity.this, PremiumActivity.class));
                 return true;
-            case R.id.nav_options:
-                startActivity(new Intent(PremiumActivity.this, OptionActivity.class));
-                return true;
             case R.id.nav_signout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(PremiumActivity.this, MainActivity.class));

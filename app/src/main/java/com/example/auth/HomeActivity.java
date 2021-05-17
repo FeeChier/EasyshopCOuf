@@ -123,9 +123,6 @@ public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.
             case R.id.nav_premium:
                 startActivity(new Intent(HomeActivity.this, PremiumActivity.class));
                 return true;
-            case R.id.nav_options:
-                startActivity(new Intent(HomeActivity.this, OptionActivity.class));
-                return true;
             case R.id.nav_signout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(HomeActivity.this, MainActivity.class));
@@ -133,6 +130,9 @@ public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.
             case R.id.nav_maliste:
                 startActivity(new Intent(HomeActivity.this, ListeActivity.class));
                 return true;
+            case R.id.nav_moncompte:
+                    startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+                    return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -64,7 +64,6 @@ public class MagasinActivity extends AppCompatActivity implements
         mArticleRecycler = findViewById(R.id.recycler_article);
         mEmptyView = findViewById(R.id.view_empty_article);
         mCategoryView = findViewById(R.id.magasin_category);
-        add = findViewById(R.id.add_article);
         delete = findViewById(R.id.delete_article);
         findViewById(R.id.magasin_button_back).setOnClickListener(this);
 

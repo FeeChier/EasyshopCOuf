@@ -160,7 +160,7 @@
         android:layout_marginStart="170dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="170dp"
-        android:text="Bienvenue parmi nous, les EASYSHOPERS !"
+        android:text="Bienvenue parmi nous, les EASYSHOPPERS !"
         android:textAlignment="center"
         android:textSize="28dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -85,15 +85,17 @@ public class ListeActivity extends AppCompatActivity implements ListAdapter.OnLi
             case R.id.nav_premium:
                 startActivity(new Intent(ListeActivity.this, PremiumActivity.class));
                 return true;
-            case R.id.nav_options:
-                startActivity(new Intent(ListeActivity.this, OptionActivity.class));
-                return true;
             case R.id.nav_signout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(ListeActivity.this, MainActivity.class));
                 return true;
             case R.id.nav_maliste:
                 startActivity(new Intent(ListeActivity.this, ListeActivity.class));
+                return true;
+
+            case R.id.nav_moncompte:
+                startActivity(new Intent(ListeActivity.this, ProfileActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

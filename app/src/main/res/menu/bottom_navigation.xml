@@ -5,9 +5,9 @@
         android:icon="@drawable/ic_baseline_star_border_24"
         android:title="Premium"/>
     <item
-        android:id="@+id/nav_options"
+        android:id="@+id/nav_moncompte"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="Options"/>
+        android:title="Mon Compte"/>
 
     <item
         android:id="@+id/nav_maliste"

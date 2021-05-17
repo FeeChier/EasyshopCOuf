@@ -9,34 +9,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
 
 import com.example.auth.Premium.PremiumActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class OptionActivity extends AppCompatActivity {
-
+public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_option);
+        setContentView(R.layout.activity_profile);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ImageButton logoButton = findViewById(R.id.logoButton);
-
-        logoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.logoButton) {
-                    startActivity(new Intent(OptionActivity.this, HomeActivity.class));
-                }
-
-            }
-        });
-
     }
 
     @Override
@@ -48,17 +34,19 @@ public class OptionActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId()){
             case R.id.nav_premium:
-                startActivity(new Intent(OptionActivity.this, PremiumActivity.class));
+                startActivity(new Intent(ProfileActivity.this, PremiumActivity.class));
                 return true;
             case R.id.nav_signout:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(OptionActivity.this, MainActivity.class));
+                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
                 return true;
-
+            case R.id.nav_maliste:
+                startActivity(new Intent(ProfileActivity.this, ListeActivity.class));
+                return true;
             case R.id.nav_moncompte:
-                startActivity(new Intent(OptionActivity.this, ProfileActivity.class));
+                startActivity(new Intent(ProfileActivity.this, ProfileActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

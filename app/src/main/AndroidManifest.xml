@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Auth">
-        <activity android:name=".OptionPremiumCategorie"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".OptionPremiumCategorie" />
         <activity android:name=".ProductDetails" />
-
         <activity android:name=".AllCategory" />
         <activity android:name=".Premium.HomePremiumActivity" />
         <activity android:name=".Premium.Paiement" />
