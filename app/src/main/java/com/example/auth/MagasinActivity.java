@@ -6,16 +6,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.auth.Adapter.Articleeadapter;
 import com.example.auth.Model.ModelMagasin;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -52,7 +56,6 @@ public class MagasinActivity extends AppCompatActivity implements
     private DatabaseReference reference;
     private String userID;
     private Articleeadapter mArticleAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +67,8 @@ public class MagasinActivity extends AppCompatActivity implements
         mArticleRecycler = findViewById(R.id.recycler_article);
         mEmptyView = findViewById(R.id.view_empty_article);
         mCategoryView = findViewById(R.id.magasin_category);
+        Button Boutonmaps = findViewById(R.id.buttonmaps);
+        Boutonmaps.setOnClickListener(this);
         delete = findViewById(R.id.delete_article);
         findViewById(R.id.magasin_button_back).setOnClickListener(this);
 
@@ -96,8 +101,31 @@ public class MagasinActivity extends AppCompatActivity implements
             case R.id.magasin_button_back:
                 onBackArrowClicked(v);
                 break;
+                case R.id.buttonmaps:
+                    getGooglemaps(v);
+                    break;
 
         }
+    }
+
+    private void getGooglemaps(View v) {
+        DocumentReference docRefmaps = mFirestore.collection("Magasins").document(magasinId);
+        docRefmaps.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot snapshot) {
+                ModelMagasin modelMagasin = snapshot.toObject(ModelMagasin.class);
+                String adresse = modelMagasin.getAdresseuri();
+                Toast.makeText(MagasinActivity.this, adresse, Toast.LENGTH_SHORT).show();
+                Uri uri = Uri.parse("https://www.google.fr/maps/dir/Ecole+d'ingénieurs+Paris-Sud+Ivry+-+ESME+Sudria,+38+Rue+Molière,+94200+Ivry-sur-Seine/" + adresse);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                intent.setPackage("com.google.android.apps.maps");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
     private void onBackArrowClicked(View v) {onBackPressed();

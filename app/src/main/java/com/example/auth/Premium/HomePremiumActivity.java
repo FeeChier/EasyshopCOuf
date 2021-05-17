@@ -2,11 +2,13 @@ package com.example.auth.Premium;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,6 +26,8 @@ import com.example.auth.Adapter.DiscountedProductAdapter;
 import com.example.auth.Adapter.FirestoreAdapter;
 import com.example.auth.Adapter.PremiumHomeAdapter;
 import com.example.auth.AllCategory;
+import com.example.auth.ListeActivity;
+import com.example.auth.MagasinActivity;
 import com.example.auth.Model.Category;
 import com.example.auth.Model.DiscountedProducts;
 import com.example.auth.Model.MagasinPremiumModel;
@@ -71,7 +75,6 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
         setContentView(R.layout.activity_premium_home);
 
         mEmptyView = findViewById(R.id.view_empty_article);
-
         Spinner spinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence>adaptera = ArrayAdapter.createFromResource(this,R.array.numbers, android.R.layout.simple_spinner_item);
         adaptera.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -86,11 +89,9 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
         option = findViewById(R.id.optionpremium);
 
 
-
         allCategory.setOnClickListener(this);
         cart.setOnClickListener(this);
         option.setOnClickListener(this);
-
         // Ajout data to model
         discountedProductsList = new ArrayList<>();
         discountedProductsList.add(new DiscountedProducts(1, R.drawable.vegetable));
@@ -113,14 +114,6 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
     private void setUpRecyclerView() {
 
         Query query =collectionReference;
-        /*
-        FirestoreRecyclerOptions options = new FirestoreRecyclerOptions.Builder<MagasinPremiumModel>()
-                .setQuery(query, MagasinPremiumModel.class)
-                .build();
-        adapter = new PremiumHomeAdapter(options);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);*/
 
         RecyclerView mfirestorelist = findViewById(R.id.premiummagasin);
         PagedList.Config config = new PagedList.Config.Builder()
@@ -185,6 +178,8 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
                 startActivity(i);
                 break;
             case R.id.cartpremium:
+                Intent p = new Intent(HomePremiumActivity.this, ListeActivity.class);
+                startActivity(p);
                 break;
             case R.id.optionpremium:
                 Intent o = new Intent(HomePremiumActivity.this, OptionPremiumCategorie.class);
@@ -203,7 +198,7 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(parent.getContext(), "Pour " + text + " personnes ", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -213,6 +208,9 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemClick(DocumentSnapshot snapshot, int position) {
-
+        Log.d("ITEM_CLICK", "Clicked an item : " + position + " and the ID is :" + snapshot.getId());
+        Intent intent= new Intent(this, MagasinActivity.class);
+        intent.putExtra(MagasinActivity.KEY_MAGASINS_ID, snapshot.getId());
+        startActivity(intent);
     }
 }
