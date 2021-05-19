@@ -82,8 +82,6 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
         spinner.setOnItemSelectedListener(this);
 
         discountRecyclerView = findViewById(R.id.discountedRecycler);
-        categoryRecyclerView = findViewById(R.id.categoryRecycler);
-        allCategory = findViewById(R.id.allCategoryImage);
 
         cart = findViewById(R.id.cartpremium);
         option = findViewById(R.id.optionpremium);
@@ -173,10 +171,6 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.allCategoryImage:
-                Intent i = new Intent(HomePremiumActivity.this, AllCategory.class);
-                startActivity(i);
-                break;
             case R.id.cartpremium:
                 Intent p = new Intent(HomePremiumActivity.this, ListeActivity.class);
                 startActivity(p);
