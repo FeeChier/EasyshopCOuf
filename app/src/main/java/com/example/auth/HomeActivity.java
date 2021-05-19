@@ -38,13 +38,10 @@ import static com.example.auth.R.drawable.ic_home_meats;
 import static com.example.auth.R.drawable.ic_home_veggies;
 
 public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.OnListItemClick{
+
     private FirebaseFirestore firebaseFirestore;
-
-
-    String UserId;
     private RecyclerView mfirestorelist;
     private FirestorePagingAdapter adapter;
-    private ImageButton btt;
 
 
     CategoryAdapter categoryAdapter;
@@ -64,12 +61,9 @@ public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.
         mfirestorelist = findViewById(R.id.liste_firestore);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-
         ImageButton logoButton = findViewById(R.id.logoButton);
 
-
         Query query = firebaseFirestore.collection("Magasins");
-
 
         PagedList.Config config = new PagedList.Config.Builder()
                 .setInitialLoadSizeHint(5)

@@ -116,7 +116,8 @@ public class MagasinActivity extends AppCompatActivity implements
                 ModelMagasin modelMagasin = snapshot.toObject(ModelMagasin.class);
                 String adresse = modelMagasin.getAdresseuri();
                 Toast.makeText(MagasinActivity.this, adresse, Toast.LENGTH_SHORT).show();
-                Uri uri = Uri.parse("https://www.google.fr/maps/dir/Ecole+d'ingénieurs+Paris-Sud+Ivry+-+ESME+Sudria,+38+Rue+Molière,+94200+Ivry-sur-Seine/" + adresse);
+                Uri uri = Uri.parse("https://www.google.fr/maps/dir/Ecole+d'ingénieurs+Paris-Sud+Ivry+-+ESME+Sudria,+38+Rue+Molière,+94200+Ivry-sur-Seine/"
+                        + adresse);
 
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 intent.setPackage("com.google.android.apps.maps");
