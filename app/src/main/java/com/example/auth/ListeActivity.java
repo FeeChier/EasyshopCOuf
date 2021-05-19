@@ -12,8 +12,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.auth.Adapter.ListAdapter;
+import com.example.auth.Model.Article;
 import com.example.auth.Model.ListModel;
 import com.example.auth.Model.ListViewModel;
 import com.example.auth.Premium.PremiumActivity;
@@ -24,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.protobuf.StringValue;
 
 public class ListeActivity extends AppCompatActivity implements ListAdapter.OnListItemClick {
 
@@ -33,7 +36,9 @@ public class ListeActivity extends AppCompatActivity implements ListAdapter.OnLi
     String UserId;
     private FirebaseAuth mAuth;
     ListViewModel listViewModel;
+    TextView prixtotal;
 
+    private ArticleActivity articleActivity = new ArticleActivity();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +49,10 @@ public class ListeActivity extends AppCompatActivity implements ListAdapter.OnLi
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mfirestorelist = findViewById(R.id.liste_articles_added);
-
+        prixtotal = findViewById(R.id.prix_total);
+        double ptotal = articleActivity.getPrixtotal();
+        String ptotals = String.valueOf(ptotal);
+        prixtotal.setText(ptotals);
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         UserId = mAuth.getCurrentUser().getUid();
@@ -78,7 +86,10 @@ public class ListeActivity extends AppCompatActivity implements ListAdapter.OnLi
         recyclerView.setAdapter(adapter);
 
     }
-
+    public double getprixtotal(){
+        double pt = articleActivity.getPrixtotal();
+        return pt;
+    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

@@ -36,9 +36,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword;
     private ProgressBar progressBar;
     private Button registerUser;
-
     private FirebaseAuth mAuth;
-
     private FirebaseFirestore fstore;
     String userId;
     @Override
@@ -130,7 +128,6 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                             muser.put("email",Email);
                             muser.put("prénom", lastName);
                             muser.put("premiumUser", false);
-
                             currentUser.sendEmailVerification();
                             documentReference.set(muser).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

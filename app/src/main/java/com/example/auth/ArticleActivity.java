@@ -59,6 +59,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     private ViewGroup mEmptyView;
     private EditText mqtt;
     TextView mCategorie;
+    private double prixtotal = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +135,9 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
         System.out.println(articleId);
         return articleId;
     }
-
+    public double getPrixtotal(){
+        return prixtotal;
+    }
     public void onBackArrowClicked(View view) {
         onBackPressed();
     }
@@ -153,6 +156,8 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
             double priceid = Double.parseDouble(price);
             double totalid = qtt1d * priceid;
             String Totalid = String.valueOf(totalid);
+            prixtotal = prixtotal + totalid;
+            System.out.println(prixtotal);
 
             Map<String, Object> articles = new HashMap<>();
 
@@ -181,6 +186,8 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
             double pricei = Double.parseDouble(price);
             double totali = qtti * pricei;
             String total = String.valueOf(totali);
+            prixtotal = prixtotal + totali;
+            System.out.println(prixtotal);
             Map<String, Object> articles = new HashMap<>();
 
             articles.put(KEY_NOM, name);
@@ -203,6 +210,5 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
             });
         return;
         }
-
     }
 }

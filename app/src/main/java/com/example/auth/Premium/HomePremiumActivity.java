@@ -145,15 +145,7 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
     protected void onStart() {
         super.onStart();
         adapter.startListening();
-    }/*
-
-    private void setCategoryRecycler(List<Category> categoryDataList) {
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        categoryRecyclerView.setLayoutManager(layoutManager);
-        categoryAdapter = new CategoryAdapter(this,categoryDataList);
-        categoryRecyclerView.setAdapter(categoryAdapter);
     }
-*/
 
     @Override
     public void onClick(View v) {
