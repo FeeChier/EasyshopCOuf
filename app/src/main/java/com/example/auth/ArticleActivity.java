@@ -58,6 +58,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     private RecyclerView mArticleRecycler;
     private ViewGroup mEmptyView;
     private EditText mqtt;
+    TextView mCategorie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
         mPrix = findViewById(R.id.article_prix);
         mDescriptionComplete = findViewById(R.id.description_complete);
         mqtt = findViewById(R.id.qttEditText);
+        mCategorie = findViewById(R.id.categorie);
 
         findViewById(R.id.article_button_back).setOnClickListener(this);
         findViewById(R.id.article_add).setOnClickListener(this);
@@ -100,10 +102,12 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
                     String description = article.getDescription();
                     String prix = article.getPrice();
                     String description_complete = article.getDescription_complete();
-                    mNameView.setText("" + name);
-                    mDescription.setText("" + description);
-                    mPrix.setText("" + prix);
-                    mDescriptionComplete.setText(" " + description_complete);
+                    String categorie = article.getCategorie();
+                    mNameView.setText(name);
+                    mDescription.setText(description);
+                    mCategorie.setText(categorie);
+                    mPrix.setText(prix);
+                    mDescriptionComplete.setText(description_complete);
                     Picasso.get().load(article.getPhoto()).into(mlogo);
                 } else {
                     mNameView.setText("");

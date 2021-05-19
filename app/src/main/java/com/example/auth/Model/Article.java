@@ -8,11 +8,12 @@ public class Article {
     private String itemId;
     private String photo;
     private String description_complete;
+    private String categorie;
     private int qtt;
 
     public Article(){}
 
-    public Article(String item, String name, String description, String price, String photo, String description_complete, int qtt){
+    public Article(String item, String name, String description, String price, String photo, String description_complete, int qtt, String categorie){
         this.description = description;
         this.price = price;
         this.name = name;
@@ -20,6 +21,7 @@ public class Article {
         this.photo = photo;
         this.description_complete = description_complete;
         this.qtt = qtt;
+        this.categorie = categorie;
     }
 
 
@@ -79,4 +81,11 @@ public class Article {
         this.qtt = qtt;
     }
 
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
 }

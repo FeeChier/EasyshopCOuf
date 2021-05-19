@@ -74,37 +74,9 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_premium_home);
 
-        mEmptyView = findViewById(R.id.view_empty_article);
-        Spinner spinner = findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence>adaptera = ArrayAdapter.createFromResource(this,R.array.numbers, android.R.layout.simple_spinner_item);
-        adaptera.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adaptera);
-        spinner.setOnItemSelectedListener(this);
-
-        discountRecyclerView = findViewById(R.id.discountedRecycler);
-
-        cart = findViewById(R.id.cartpremium);
-        option = findViewById(R.id.optionpremium);
-
-        cart.setOnClickListener(this);
-        option.setOnClickListener(this);
-        // Ajout data to model
-        discountedProductsList = new ArrayList<>();
-        discountedProductsList.add(new DiscountedProducts(1, R.drawable.vegetable));
-        discountedProductsList.add(new DiscountedProducts(2, R.drawable.meat));
-        discountedProductsList.add(new DiscountedProducts(3, R.drawable.cookies));
-        discountedProductsList.add(new DiscountedProducts(4, R.drawable.fruits));
-
-
-        setDiscountedRecycler(discountedProductsList);
-        setUpRecyclerView();
-    }
-
-    private void setUpRecyclerView() {
-
         Query query =collectionReference;
 
-        RecyclerView mfirestorelist = findViewById(R.id.premiummagasin);
+        RecyclerView mfirestorelist = findViewById(R.id.recyclermagasinpremium);
         PagedList.Config config = new PagedList.Config.Builder()
                 .setInitialLoadSizeHint(5)
                 .setPageSize(3)
@@ -130,7 +102,31 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
         mfirestorelist.setHasFixedSize(true);
         mfirestorelist.setLayoutManager(new LinearLayoutManager(this));
         mfirestorelist.setAdapter(adapter);
+
+        mEmptyView = findViewById(R.id.view_empty_article);
+        Spinner spinner = findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence>adaptera = ArrayAdapter.createFromResource(this,R.array.numbers, android.R.layout.simple_spinner_item);
+        adaptera.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adaptera);
+        spinner.setOnItemSelectedListener(this);
+
+        discountRecyclerView = findViewById(R.id.discountedRecycler);
+
+        cart = findViewById(R.id.cartpremium);
+        option = findViewById(R.id.optionpremium);
+
+        cart.setOnClickListener(this);
+        option.setOnClickListener(this);
+
+        // Ajout data to model
+        discountedProductsList = new ArrayList<>();
+        discountedProductsList.add(new DiscountedProducts(1, R.drawable.vegetable));
+        discountedProductsList.add(new DiscountedProducts(2, R.drawable.meat));
+        discountedProductsList.add(new DiscountedProducts(3, R.drawable.cookies));
+        discountedProductsList.add(new DiscountedProducts(4, R.drawable.fruits));
+        setDiscountedRecycler(discountedProductsList);
     }
+
 
     private void setDiscountedRecycler(List<DiscountedProducts> dataList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -149,7 +145,7 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
     protected void onStart() {
         super.onStart();
         adapter.startListening();
-    }
+    }/*
 
     private void setCategoryRecycler(List<Category> categoryDataList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -157,7 +153,7 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
         categoryAdapter = new CategoryAdapter(this,categoryDataList);
         categoryRecyclerView.setAdapter(categoryAdapter);
     }
-
+*/
 
     @Override
     public void onClick(View v) {
