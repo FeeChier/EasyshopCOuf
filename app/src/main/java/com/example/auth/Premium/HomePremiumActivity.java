@@ -86,8 +86,6 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
         cart = findViewById(R.id.cartpremium);
         option = findViewById(R.id.optionpremium);
 
-
-        allCategory.setOnClickListener(this);
         cart.setOnClickListener(this);
         option.setOnClickListener(this);
         // Ajout data to model
@@ -97,15 +95,8 @@ public class HomePremiumActivity extends AppCompatActivity implements AdapterVie
         discountedProductsList.add(new DiscountedProducts(3, R.drawable.cookies));
         discountedProductsList.add(new DiscountedProducts(4, R.drawable.fruits));
 
-        // Ajout data to model
-        categoryList = new ArrayList<>();
-        categoryList.add(new Category(1, R.drawable.fruits));
-        categoryList.add(new Category(2, R.drawable.cookies));
-        categoryList.add(new Category(3, R.drawable.meat));
-        categoryList.add(new Category(4, R.drawable.vegetable));
 
         setDiscountedRecycler(discountedProductsList);
-        setCategoryRecycler(categoryList);
         setUpRecyclerView();
     }
 
