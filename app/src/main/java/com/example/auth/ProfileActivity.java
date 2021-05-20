@@ -12,10 +12,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.auth.Model.User;
+import com.example.auth.Premium.Paiement;
 import com.example.auth.Premium.PremiumActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -47,6 +49,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         emailv = findViewById(R.id.emailprofilnormal);
         Button sedeco = findViewById(R.id.seDeconnecternrml);
         sedeco.setOnClickListener(this);
+
+        ImageButton logoButton = findViewById(R.id.logoButton);
+        logoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId()==R.id.logoButton){
+                    startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
+                }
+
+            }
+        });
     }
 
     @Override

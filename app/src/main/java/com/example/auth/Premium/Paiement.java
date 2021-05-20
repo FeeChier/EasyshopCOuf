@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.auth.HomeActivity;
 import com.example.auth.R;
@@ -53,6 +54,17 @@ public class Paiement extends AppCompatActivity implements View.OnClickListener 
         findViewById(R.id.paiement_plus_tard).setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
         fstore = FirebaseFirestore.getInstance();
+
+        ImageButton logoButton = findViewById(R.id.logoButton);
+        logoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId()==R.id.logoButton){
+                    startActivity(new Intent(Paiement.this, HomeActivity.class));
+                }
+
+            }
+        });
     }
 
 
