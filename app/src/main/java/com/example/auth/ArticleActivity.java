@@ -138,6 +138,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     public double getPrixtotal(){
         return prixtotal;
     }
+
     public void onBackArrowClicked(View view) {
         onBackPressed();
     }

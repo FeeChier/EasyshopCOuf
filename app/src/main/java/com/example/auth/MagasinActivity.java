@@ -37,6 +37,7 @@ public class MagasinActivity extends AppCompatActivity implements
     private static final String TAG = "MagasinDetail";
 
     public static final String KEY_MAGASINS_ID = "key_magasins_id";
+
     private static String magasinId;
 
     private ImageView mlogo;

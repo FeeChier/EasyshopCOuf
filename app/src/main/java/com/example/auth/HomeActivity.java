@@ -53,8 +53,6 @@ public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -92,6 +90,7 @@ public class HomeActivity extends AppCompatActivity implements FirestoreAdapter.
         mfirestorelist.setAdapter(adapter);
 
         categoryRecyclerView = findViewById(R.id.recycler_topCategorie);
+
         categoryList = new ArrayList<>();
         categoryList.add(new Category(1, R.drawable.fruits));
         categoryList.add(new Category(2, R.drawable.cookies));
